@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { createControllers } from "../controllers/developers.controllers";
-
+import { createDeveloper } from "../logica/developer.logic";
 
 const developersRouter = Router()
 
-developersRouter.post("", createControllers)
+developersRouter.post("/developers", createDeveloper)
+
+export {developersRouter}
