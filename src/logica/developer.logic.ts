@@ -23,6 +23,22 @@ const createDeveloper = async (req: Request, resp: Response) => {
   return resp.status(201).json(developer);
 };
 
+const listDevelopersAll = async (req: Request, resp: Response) => {
+  const { id } = req.params;
+
+  const query = format(
+    `
+    SELECT * FROM "developers"
+    `,
+    [id]
+  );
+
+  const queryResult: QueryResult = await client.query(query);
+  const developer = queryResult.rows;
+
+  return resp.status(200).json(developer);
+};
+
 const listDeveloper = async (req: Request, resp: Response) => {
   const { id } = req.params;
 
@@ -39,4 +55,4 @@ const listDeveloper = async (req: Request, resp: Response) => {
   return resp.status(200).json(developer);
 };
 
-export { createDeveloper, listDeveloper };
+export { createDeveloper, listDeveloper, listDevelopersAll };
