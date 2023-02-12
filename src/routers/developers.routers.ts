@@ -1,8 +1,8 @@
-import { Router } from "express";
-import { createDeveloper } from "../logica/developer.logic";
+// import { Router } from "express";
+// import { createDeveloper } from "../logica/developer.logic";
 
-const developersRouter = Router()
+// const developersRouter = Router()
 
-developersRouter.post("/developers", createDeveloper)
+// developersRouter.post("/developers", createDeveloper)
 
-export {developersRouter}
+// export {developersRouter}

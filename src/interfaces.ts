@@ -1,7 +1,14 @@
 interface IDevelopers {
+  id: number;
   name: string;
   email: string;
-  developerInfoId: number;
+  developer_info_id: number;
 }
 
-export { IDevelopers };
+interface IDeveloperInfos {
+  id: number;
+  developer_since: Date;
+  preferred_os: string;
+}
+
+export { IDevelopers, IDeveloperInfos };
