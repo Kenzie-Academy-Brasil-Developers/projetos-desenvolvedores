@@ -7,27 +7,25 @@ import { IDevelopers } from "../interfaces/developers";
 const createDeveloper = async (req: Request, resp: Response) => {
   const { name, email, developer_info_id }: IDevelopers = req.body;
 
-  if (Object.keys(req.body).length <= 0) {
+  if (!name || !email || !developer_info_id) {
     return resp.status(400).send({
-      error: `Invalid data, this object needs to look like this: name: string, email: string, developer_info_id: number`,
+      error: `Invalid data, missing values for name, email, or developer_info_id`,
     });
   }
 
   try {
     const query = format(
       `
-    INSERT INTO "developers" (name, email, developer_info_id) 
-    VALUES (%L) 
-    RETURNING *`,
-      [name, email, developer_info_id]
+  INSERT INTO developers (name, email, developer_info_id)
+  VALUES ($1, $2, $3) RETURNING *
+  `,  [name, email, developer_info_id]
     );
 
-    const queryResult: QueryResult = await client.query(query);
+    const queryResult = await client.query(query);
     const developer = queryResult.rows[0];
-
     return resp.status(201).json(developer);
   } catch (error: any) {
-    resp.status(400).send({ error: error.message });
+    return resp.status(400).send({ error: error.message });
   }
 };
 
