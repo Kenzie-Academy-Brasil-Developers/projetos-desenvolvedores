@@ -88,4 +88,25 @@ const listProject = async (req: Request, resp: Response) => {
   }
 };
 
-export { createProjects, listProjectsAll, listProject };
+const deleteProjects = async (req: Request, resp: Response) => {
+  const id: number = parseInt(req.params.id);
+
+  try {
+    const query = format(
+      `
+      DELETE FROM projects
+      WHERE 
+          id = %L
+      `,
+      [id]
+    );
+
+    await client.query(query);
+    return resp.status(204).send();
+  } catch (error: any) {
+    resp.status(400).send({ error: error.message });
+  }
+};
+
+
+export { createProjects, listProjectsAll, listProject, deleteProjects };
