@@ -6,18 +6,23 @@ import { IDeveloperInfos } from "../interfaces";
 
 const createDeveloperInfos = async (req: Request, resp: Response) => {
   const { developer_since, preferred_os }: IDeveloperInfos = req.body;
-  const query = format(
-    `
-    INSERT INTO "developer_infos" (developer_since, preferred_os) 
-    VALUES (%L) 
-    RETURNING *`,
-    [developer_since, preferred_os]
-  );
 
-  const queryResult: QueryResult = await client.query(query);
-  const developer = queryResult.rows[0];
+  try {
+    const query = format(
+      `
+      INSERT INTO "developer_infos" (developer_since, preferred_os) 
+      VALUES (%L) 
+      RETURNING *`,
+      [developer_since, preferred_os]
+    );
 
-  return resp.status(201).json(developer);
+    const queryResult: QueryResult = await client.query(query);
+    const developer = queryResult.rows[0];
+
+    return resp.status(201).json(developer);
+  } catch (error: any) {
+    resp.status(400).send({ error: error.message });
+  }
 };
 
 const updateDeveloperInfos = async (req: Request, resp: Response) => {

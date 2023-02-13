@@ -6,51 +6,61 @@ import { IDevelopers } from "../interfaces";
 
 const createDeveloper = async (req: Request, resp: Response) => {
   const { name, email, developer_info_id }: IDevelopers = req.body;
-
-  const query = format(
-    `
+  try {
+    const query = format(
+      `
     INSERT INTO "developers" (name, email, developer_info_id) 
     VALUES (%L) 
     RETURNING *`,
-    [name, email, developer_info_id]
-  );
+      [name, email, developer_info_id]
+    );
 
-  const queryResult: QueryResult = await client.query(query);
-  const developer = queryResult.rows[0];
+    const queryResult: QueryResult = await client.query(query);
+    const developer = queryResult.rows[0];
 
-  return resp.status(201).json(developer);
+    return resp.status(201).json(developer);
+  } catch (error: any) {
+    resp.status(400).send({ error: error.message });
+  }
 };
 
 const listDevelopersAll = async (req: Request, resp: Response) => {
   const { id } = req.params;
 
-  const query = format(
-    `
+  try {
+    const query = format(
+      `
     SELECT * FROM "developers"
     `,
-    [id]
-  );
+      [id]
+    );
 
-  const queryResult: QueryResult = await client.query(query);
-  const developer = queryResult.rows;
+    const queryResult: QueryResult = await client.query(query);
+    const developer = queryResult.rows;
 
-  return resp.status(200).json(developer);
+    return resp.status(200).json(developer);
+  } catch (error: any) {
+    resp.status(400).send({ error: error.message });
+  }
 };
 
 const listDeveloper = async (req: Request, resp: Response) => {
   const { id } = req.params;
-
-  const query = format(
-    `
+  try {
+    const query = format(
+      `
     SELECT * FROM "developers" WHERE id = %L
     `,
-    [id]
-  );
+      [id]
+    );
 
-  const queryResult: QueryResult = await client.query(query);
-  const developer = queryResult.rows[0];
+    const queryResult: QueryResult = await client.query(query);
+    const developer = queryResult.rows[0];
 
-  return resp.status(200).json(developer);
+    return resp.status(200).json(developer);
+  } catch (error: any) {
+    resp.status(400).send({ error: error.message });
+  }
 };
 
 const updateDeveloper = async (req: Request, resp: Response) => {
