@@ -7,8 +7,6 @@ import { IDevelopers } from "../interfaces";
 const createDeveloper = async (req: Request, resp: Response) => {
   const { name, email, developer_info_id }: IDevelopers = req.body;
 
-  console.log(req.body);
-
   const query = format(
     `
     INSERT INTO "developers" (name, email, developer_info_id) 
@@ -73,10 +71,9 @@ const updateDeveloper = async (req: Request, resp: Response) => {
       return resp.status(400).send({ error: "No update fields provided" });
     }
 
-    const query = format(
-      `UPDATE developers SET ${updateSet} WHERE id = %L`,
-      [id]
-    );
+    const query = format(`UPDATE developers SET ${updateSet} WHERE id = %L`, [
+      id,
+    ]);
 
     const queryResult: QueryResult = await client.query(query);
 
