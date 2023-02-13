@@ -10,13 +10,15 @@ import {
 } from "./logica/developer.logic";
 import { createDeveloperInfos, updateDeveloperInfos } from "./logica/developerInfos.logic";
 import { createProjects, listProject, listProjectsAll } from "./logica/projects.logic";
+import { ensureIdDeveloperExist } from "./middlewares/developers.middlewares";
+import { ensureIdProjectExist } from "./middlewares/projects.middleware";
 
 const app: Application = express();
 app.use(json());
 
 app.post("/developers", createDeveloper);
 app.get("/developers", listDevelopersAll);
-app.get("/developers/:id", listDeveloper);
+app.get("/developers/:id", ensureIdDeveloperExist, listDeveloper);
 app.patch("/developers/:id", updateDeveloper);
 app.delete("/developers/:id", deleteDeveloper)
 
@@ -25,7 +27,7 @@ app.patch("/developers/:id/infos", updateDeveloperInfos)
 
 app.post("/projects", createProjects)
 app.get("/projects", listProjectsAll);
-app.get("/projects/:id", listProject);
+app.get("/projects/:id", ensureIdProjectExist, listProject);
 
 
 const PORT: number = Number(process.env.PORT) || 3000;

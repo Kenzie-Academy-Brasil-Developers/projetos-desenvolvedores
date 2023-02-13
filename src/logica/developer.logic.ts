@@ -25,14 +25,14 @@ const createDeveloper = async (req: Request, resp: Response) => {
 };
 
 const listDevelopersAll = async (req: Request, resp: Response) => {
-  const { id } = req.params;
-
   try {
     const query = format(
       `
-    SELECT * FROM "developers"
-    `,
-      [id]
+      SELECT developers.*, developer_infos.* 
+      FROM developers 
+      INNER JOIN developer_infos 
+      ON developers.developer_info_id = developer_infos.id
+      `
     );
 
     const queryResult: QueryResult = await client.query(query);
@@ -46,10 +46,14 @@ const listDevelopersAll = async (req: Request, resp: Response) => {
 
 const listDeveloper = async (req: Request, resp: Response) => {
   const { id } = req.params;
+
   try {
     const query = format(
       `
-    SELECT * FROM "developers" WHERE id = %L
+      SELECT developers.*, developer_infos.*
+      FROM "developers" 
+      INNER JOIN "developer_infos" ON developers.developer_info_id = developer_infos.id
+      WHERE developers.id = %L
     `,
       [id]
     );
