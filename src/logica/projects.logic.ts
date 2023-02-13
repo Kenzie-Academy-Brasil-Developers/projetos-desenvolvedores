@@ -15,6 +15,13 @@ const createProjects = async (req: Request, resp: Response) => {
     developer_id,
   }: IProjects = req.body;
 
+  if (Object.keys(req.body).length <= 0) {
+    return resp.status(400).send({
+      error:
+        "Bad Request",
+    });
+  }
+
   try {
     const query = format(
       `
@@ -101,13 +108,14 @@ const updateProject = async (req: Request, resp: Response) => {
       developer_id?: number;
     } = req.body;
 
+   
     const updateSet = Object.entries(updateParams)
       .filter(([key, value]) => value !== undefined)
       .map(([key, value]) => format(`${key} = %L`, value))
       .join(", ");
 
     if (!updateSet) {
-      return resp.status(400).send({ error: "No update fields provided" });
+      return resp.status(400).send({ error: "Bad Request" });
     }
 
     const query = format(
@@ -152,5 +160,10 @@ const deleteProjects = async (req: Request, resp: Response) => {
   }
 };
 
-
-export { createProjects, listProjectsAll, listProject, updateProject, deleteProjects };
+export {
+  createProjects,
+  listProjectsAll,
+  listProject,
+  updateProject,
+  deleteProjects,
+};

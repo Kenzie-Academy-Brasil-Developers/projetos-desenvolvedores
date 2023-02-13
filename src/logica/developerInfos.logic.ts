@@ -7,6 +7,13 @@ import { IDeveloperInfos } from "../interfaces/developers";
 const createDeveloperInfos = async (req: Request, resp: Response) => {
   const { developer_since, preferred_os }: IDeveloperInfos = req.body;
 
+  if (Object.keys(req.body).length <= 0) {
+    return resp.status(400).send({
+      error:
+        "Bad Request",
+    });
+  }
+
   try {
     const query = format(
       `
@@ -39,7 +46,7 @@ const updateDeveloperInfos = async (req: Request, resp: Response) => {
       .join(", ");
 
     if (!updateSet) {
-      return resp.status(400).send({ error: "No update fields provided" });
+      return resp.status(400).send({ error: "Bad Request" });
     }
 
     const query = format(
