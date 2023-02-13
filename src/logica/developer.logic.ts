@@ -86,4 +86,30 @@ const updateDeveloper = async (req: Request, resp: Response) => {
   }
 };
 
-export { createDeveloper, listDeveloper, listDevelopersAll, updateDeveloper };
+const deleteDeveloper = async (req: Request, resp: Response) => {
+  const id: number = parseInt(req.params.id);
+
+  try {
+    const query = format(
+      `
+      DELETE FROM developers
+      WHERE 
+          id = %L
+      `,
+      [id]
+    );
+
+    await client.query(query);
+    return resp.status(204).send();
+  } catch (error: any) {
+    resp.status(400).send({ error: error.message });
+  }
+};
+
+export {
+  createDeveloper,
+  listDeveloper,
+  listDevelopersAll,
+  updateDeveloper,
+  deleteDeveloper,
+};

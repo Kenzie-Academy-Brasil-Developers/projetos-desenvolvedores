@@ -3,6 +3,7 @@ import express, { Application, json } from "express";
 import { databaseInit } from "./database/config";
 import {
   createDeveloper,
+  deleteDeveloper,
   listDeveloper,
   listDevelopersAll,
   updateDeveloper,
@@ -18,6 +19,7 @@ app.get("/developers/:id", listDeveloper);
 app.get("/developers", listDevelopersAll);
 app.patch("/developers/:id", updateDeveloper);
 app.patch("/developers/:id/infos", updateDeveloperInfos)
+app.delete("/developers/:id", deleteDeveloper)
 
 const PORT: number = Number(process.env.PORT) || 3000;
 
