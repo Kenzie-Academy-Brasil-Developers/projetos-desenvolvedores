@@ -20,9 +20,9 @@ import {
   updateProject,
 } from "./logica/projects.logic";
 import { ensureIdDeveloperInfosExist } from "./middlewares/developerInfos.middlewares";
-import { ensureIdDeveloperExist } from "./middlewares/developers.middlewares";
+import { ensureIdDeveloperExist, validateTypesDeveloper } from "./middlewares/developers.middlewares";
 import { ensureIdProjectExist } from "./middlewares/projects.middleware";
-import { validateTypesDeveloper, validateTypesDeveloperUpdate } from "./middlewares/validadeBody";
+
 
 const app: Application = express();
 app.use(json());
@@ -30,7 +30,7 @@ app.use(json());
 app.post("/developers", validateTypesDeveloper, createDeveloper);
 app.get("/developers", listDevelopersAll);
 app.get("/developers/:id", ensureIdDeveloperExist, listDeveloper);
-app.patch("/developers/:id", ensureIdDeveloperExist, validateTypesDeveloperUpdate, updateDeveloper);
+app.patch("/developers/:id", ensureIdDeveloperExist, validateTypesDeveloper, updateDeveloper);
 app.delete("/developers/:id", ensureIdDeveloperExist, deleteDeveloper);
 
 app.post("/developers/:id/infos", createDeveloperInfos);
