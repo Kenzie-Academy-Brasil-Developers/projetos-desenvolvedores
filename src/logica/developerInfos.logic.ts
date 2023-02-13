@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { QueryResult } from "pg";
 import format from "pg-format";
 import { client } from "../database";
-import { IDeveloperInfos } from "../interfaces";
+import { IDeveloperInfos } from "../interfaces/interfaces";
 
 const createDeveloperInfos = async (req: Request, resp: Response) => {
   const { developer_since, preferred_os }: IDeveloperInfos = req.body;
@@ -43,7 +43,10 @@ const updateDeveloperInfos = async (req: Request, resp: Response) => {
     }
 
     const query = format(
-      `UPDATE developer_infos SET ${updateSet} WHERE id = %L`,
+      `
+      UPDATE developer_infos SET ${updateSet} 
+      WHERE id = %L
+      `,
       [id]
     );
 

@@ -35,7 +35,7 @@ name VARCHAR(30) NOT NULL
 INSERT INTO technologies (name)
 VALUES ('JavaScript'), ('Python'), ('React'), ('Express.js'), ('HTML'), ('CSS'), ('Django'), ('PostgreSQL'), ('MongoDB');
 
-CREATE TABLE projectsTechnologies (
+CREATE TABLE projectstechnologies (
 id SERIAL PRIMARY KEY,
 added_in DATE NOT NULL,
 project_id INTEGER NOT NULL,

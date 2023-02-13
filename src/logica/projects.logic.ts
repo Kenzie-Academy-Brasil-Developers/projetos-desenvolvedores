@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { QueryResult } from "pg";
 import format from "pg-format";
 import { client } from "../database";
-import { IProjects } from "../interfaces";
+import { IProjects } from "../interfaces/projects.interfaces";
 
 const createProjects = async (req: Request, resp: Response) => {
   const {
@@ -49,43 +49,43 @@ const createProjects = async (req: Request, resp: Response) => {
 };
 
 const listProjectsAll = async (req: Request, resp: Response) => {
-    const { id } = req.params;
-  
-    try {
-      const query = format(
-        `
+  const { id } = req.params;
+
+  try {
+    const query = format(
+      `
       SELECT * FROM projects
       `,
-        [id]
-      );
-  
-      const queryResult: QueryResult = await client.query(query);
-      const projects = queryResult.rows;
-  
-      return resp.status(200).json(projects);
-    } catch (error: any) {
-      resp.status(400).send({ error: error.message });
-    }
-  };
+      [id]
+    );
 
-  const listProject = async (req: Request, resp: Response) => {
-    const { id } = req.params;
-    try {
-      const query = format(
-        `
+    const queryResult: QueryResult = await client.query(query);
+    const projects = queryResult.rows;
+
+    return resp.status(200).json(projects);
+  } catch (error: any) {
+    resp.status(400).send({ error: error.message });
+  }
+};
+
+const listProject = async (req: Request, resp: Response) => {
+  const { id } = req.params;
+  try {
+    const query = format(
+      `
       SELECT * FROM projects 
       WHERE id = %L
       `,
-        [id]
-      );
-  
-      const queryResult: QueryResult = await client.query(query);
-      const project = queryResult.rows[0];
-  
-      return resp.status(200).json(project);
-    } catch (error: any) {
-      resp.status(400).send({ error: error.message });
-    }
-  };
+      [id]
+    );
 
-export {createProjects, listProjectsAll, listProject}
+    const queryResult: QueryResult = await client.query(query);
+    const project = queryResult.rows[0];
+
+    return resp.status(200).json(project);
+  } catch (error: any) {
+    resp.status(400).send({ error: error.message });
+  }
+};
+
+export { createProjects, listProjectsAll, listProject };
