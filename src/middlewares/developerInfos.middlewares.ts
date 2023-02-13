@@ -18,9 +18,7 @@ const validateTypesInfos = (
 
   if (invalidFields.length) {
     return resp.status(400).send({
-      error: `Tipo de dado inválido para o(s) campo(s): ${invalidFields.join(
-        ", "
-      )}`,
+      error: "Invalid data, this object needs to look like this: developer_since: typeof string and preferred_os: typeof string"
     });
   }
   next();
