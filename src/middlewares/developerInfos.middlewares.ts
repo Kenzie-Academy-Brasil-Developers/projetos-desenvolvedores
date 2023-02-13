@@ -1,6 +1,31 @@
 import { NextFunction, Request, Response } from "express";
 import { client } from "../database";
 
+const validateTypesInfos = (
+  req: Request,
+  resp: Response,
+  next: NextFunction
+) => {
+  const keys = Object.keys(req.body);
+  const requiredTypes: any = {
+    developer_since: "string",
+    preferred_os: "string",
+  };
+
+  const invalidFields = keys.filter(
+    (key) => typeof req.body[key] !== requiredTypes[key]
+  );
+
+  if (invalidFields.length) {
+    return resp.status(400).send({
+      error: `Tipo de dado inválido para o(s) campo(s): ${invalidFields.join(
+        ", "
+      )}`,
+    });
+  }
+  next();
+};
+
 const ensureIdDeveloperInfosExist = async (
   req: Request,
   resp: Response,
@@ -29,4 +54,4 @@ const ensureIdDeveloperInfosExist = async (
   return next();
 };
 
-export { ensureIdDeveloperInfosExist };
+export { validateTypesInfos, ensureIdDeveloperInfosExist };

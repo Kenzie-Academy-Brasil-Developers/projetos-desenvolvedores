@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { QueryResult } from "pg";
 import format from "pg-format";
 import { client } from "../database";
-import { IDevelopers } from "../interfaces/interfaces";
+import { IDevelopers } from "../interfaces/developers";
 
 const createDeveloper = async (req: Request, resp: Response) => {
   const { name, email, developer_info_id }: IDevelopers = req.body;

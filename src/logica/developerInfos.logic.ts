@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { QueryResult } from "pg";
 import format from "pg-format";
 import { client } from "../database";
-import { IDeveloperInfos } from "../interfaces/interfaces";
+import { IDeveloperInfos } from "../interfaces/developers";
 
 const createDeveloperInfos = async (req: Request, resp: Response) => {
   const { developer_since, preferred_os }: IDeveloperInfos = req.body;
