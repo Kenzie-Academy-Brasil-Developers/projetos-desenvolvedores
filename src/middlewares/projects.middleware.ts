@@ -23,9 +23,7 @@ const validateTypesProjects = (
 
   if (invalidFields.length) {
     return resp.status(400).send({
-      error: `Tipo de dado inválido para o(s) campo(s): ${invalidFields.join(
-        ", "
-      )}`,
+      error: "Invalid data, this object needs to look like this:  name: string, description: string, estimated_time: string, repository: string, start_date: string, end_date: string, developer_id: number"
     });
   }
   next();

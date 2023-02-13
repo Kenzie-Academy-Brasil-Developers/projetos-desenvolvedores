@@ -15,9 +15,7 @@ const validateTypesDeveloper = (req: Request, resp: Response, next: NextFunction
 
   if (invalidFields.length) {
     return resp.status(400).send({
-      error: `Tipo de dado inválido para o(s) campo(s): ${invalidFields.join(
-        ", "
-      )}`,
+      error: "Invalid data, this object needs to look like this: name: string, email: string, developer_info_id: number"
     });
   }
   next();
