@@ -59,7 +59,6 @@ const updateDeveloper = async (req: Request, resp: Response) => {
     const updateParams: {
       name?: string;
       email?: string;
-      developer_info_id?: number;
     } = req.body;
 
     const updateSet = Object.entries(updateParams)

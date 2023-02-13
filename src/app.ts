@@ -7,7 +7,7 @@ import {
   listDevelopersAll,
   updateDeveloper,
 } from "./logica/developer.logic";
-import { createDeveloperInfos } from "./logica/developerInfos.logic";
+import { createDeveloperInfos, updateDeveloperInfos } from "./logica/developerInfos.logic";
 
 const app: Application = express();
 app.use(json());
@@ -17,6 +17,7 @@ app.post("/developers", createDeveloper);
 app.get("/developers/:id", listDeveloper);
 app.get("/developers", listDevelopersAll);
 app.patch("/developers/:id", updateDeveloper);
+app.patch("/developers/:id/infos", updateDeveloperInfos)
 
 const PORT: number = Number(process.env.PORT) || 3000;
 
