@@ -17,6 +17,7 @@ import {
   deleteProjects,
   listProject,
   listProjectsAll,
+  updateProject,
 } from "./logica/projects.logic";
 import { ensureIdDeveloperInfosExist } from "./middlewares/developerInfos.middlewares";
 import { ensureIdDeveloperExist } from "./middlewares/developers.middlewares";
@@ -42,6 +43,7 @@ app.post("/projects", createProjects);
 app.get("/projects", listProjectsAll);
 app.get("/projects/:id", ensureIdProjectExist, listProject);
 app.delete("/projects/:id", ensureIdProjectExist, deleteProjects);
+app.patch("/projects/:id", ensureIdProjectExist, updateProject);
 
 const PORT: number = Number(process.env.PORT) || 3000;
 

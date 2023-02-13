@@ -88,6 +88,50 @@ const listProject = async (req: Request, resp: Response) => {
   }
 };
 
+const updateProject = async (req: Request, resp: Response) => {
+  try {
+    const { id } = req.params;
+    const updateParams: {
+      name?: string;
+      description?: string;
+      estimated_time?: string;
+      repository?: string;
+      start_date?: Date;
+      end_date?: Date;
+      developer_id?: number;
+    } = req.body;
+
+    const updateSet = Object.entries(updateParams)
+      .filter(([key, value]) => value !== undefined)
+      .map(([key, value]) => format(`${key} = %L`, value))
+      .join(", ");
+
+    if (!updateSet) {
+      return resp.status(400).send({ error: "No update fields provided" });
+    }
+
+    const query = format(
+      `UPDATE projects 
+    SET ${updateSet} WHERE id = %L`,
+      [id]
+    );
+
+    const queryResult: QueryResult = await client.query(query);
+
+    const developer = await client.query(
+      format(
+        `SELECT * FROM projects 
+      WHERE id = %L`,
+        [id]
+      )
+    );
+
+    return resp.send(developer.rows[0]);
+  } catch (error: any) {
+    resp.status(400).send({ error: error.message });
+  }
+};
+
 const deleteProjects = async (req: Request, resp: Response) => {
   const id: number = parseInt(req.params.id);
 
@@ -109,4 +153,4 @@ const deleteProjects = async (req: Request, resp: Response) => {
 };
 
 
-export { createProjects, listProjectsAll, listProject, deleteProjects };
+export { createProjects, listProjectsAll, listProject, updateProject, deleteProjects };
