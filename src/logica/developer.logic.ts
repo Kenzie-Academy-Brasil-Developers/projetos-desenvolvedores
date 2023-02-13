@@ -28,7 +28,7 @@ const listDevelopersAll = async (req: Request, resp: Response) => {
   try {
     const query = format(
       `
-      SELECT developers.*, developer_infos.* 
+      SELECT developers.*, developer_infos.developer_since, developer_infos.preferred_os
       FROM developers 
       INNER JOIN developer_infos 
       ON developers.developer_info_id = developer_infos.id
@@ -50,8 +50,8 @@ const listDeveloper = async (req: Request, resp: Response) => {
   try {
     const query = format(
       `
-      SELECT developers.*, developer_infos.*
-      FROM "developers" 
+      SELECT developers.*, developer_infos.developer_since, developer_infos.preferred_os
+      FROM developers 
       INNER JOIN "developer_infos" ON developers.developer_info_id = developer_infos.id
       WHERE developers.id = %L
     `,

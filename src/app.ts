@@ -22,14 +22,15 @@ import {
 import { ensureIdDeveloperInfosExist } from "./middlewares/developerInfos.middlewares";
 import { ensureIdDeveloperExist } from "./middlewares/developers.middlewares";
 import { ensureIdProjectExist } from "./middlewares/projects.middleware";
+import { validateTypesDeveloper, validateTypesDeveloperUpdate } from "./middlewares/validadeBody";
 
 const app: Application = express();
 app.use(json());
 
-app.post("/developers", createDeveloper);
+app.post("/developers", validateTypesDeveloper, createDeveloper);
 app.get("/developers", listDevelopersAll);
 app.get("/developers/:id", ensureIdDeveloperExist, listDeveloper);
-app.patch("/developers/:id", ensureIdDeveloperExist, updateDeveloper);
+app.patch("/developers/:id", ensureIdDeveloperExist, validateTypesDeveloperUpdate, updateDeveloper);
 app.delete("/developers/:id", ensureIdDeveloperExist, deleteDeveloper);
 
 app.post("/developers/:id/infos", createDeveloperInfos);
