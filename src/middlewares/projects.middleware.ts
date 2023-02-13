@@ -23,7 +23,7 @@ const validateTypesProjects = (
 
   if (invalidFields.length) {
     return resp.status(400).send({
-      error: "Invalid data, this object needs to look like this:  name: string, description: string, estimated_time: string, repository: string, start_date: string, end_date: string, developer_id: number"
+      error: "Invalid data, this object needs to look like this:  name: string, description: string, estimated_time: string, repository: string, start_date: Date, end_date: Date, developer_id: number"
     });
   }
   next();

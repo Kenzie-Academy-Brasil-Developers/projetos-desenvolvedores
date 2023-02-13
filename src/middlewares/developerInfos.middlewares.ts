@@ -18,7 +18,7 @@ const validateTypesInfos = (
 
   if (invalidFields.length) {
     return resp.status(400).send({
-      error: "Invalid data, this object needs to look like this: developer_since: string and preferred_os: string"
+      error: "Invalid data, this object needs to look like this: developer_since: Date, and preferred_os: string"
     });
   }
   next();
