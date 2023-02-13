@@ -17,7 +17,8 @@ const createDeveloper = async (req: Request, resp: Response) => {
     const query = format(
       `
   INSERT INTO developers (name, email, developer_info_id)
-  VALUES ($1, $2, $3) RETURNING *
+  VALUES (%L)
+  RETURNING *
   `,  [name, email, developer_info_id]
     );
 
