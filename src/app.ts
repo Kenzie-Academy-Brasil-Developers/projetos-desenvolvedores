@@ -9,17 +9,24 @@ import {
   updateDeveloper,
 } from "./logica/developer.logic";
 import { createDeveloperInfos, updateDeveloperInfos } from "./logica/developerInfos.logic";
+import { createProjects, listProject, listProjectsAll } from "./logica/projects.logic";
 
 const app: Application = express();
 app.use(json());
 
-app.post("/developers:id/infos", createDeveloperInfos);
 app.post("/developers", createDeveloper);
-app.get("/developers/:id", listDeveloper);
 app.get("/developers", listDevelopersAll);
+app.get("/developers/:id", listDeveloper);
 app.patch("/developers/:id", updateDeveloper);
-app.patch("/developers/:id/infos", updateDeveloperInfos)
 app.delete("/developers/:id", deleteDeveloper)
+
+app.post("/developers/:id/infos", createDeveloperInfos);
+app.patch("/developers/:id/infos", updateDeveloperInfos)
+
+app.post("/projects", createProjects)
+app.get("/projects", listProjectsAll);
+app.get("/projects/:id", listProject);
+
 
 const PORT: number = Number(process.env.PORT) || 3000;
 
