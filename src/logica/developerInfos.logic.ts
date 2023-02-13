@@ -7,23 +7,22 @@ import { IDeveloperInfos } from "../interfaces/developers";
 const createDeveloperInfos = async (req: Request, resp: Response) => {
   const { developer_since, preferred_os }: IDeveloperInfos = req.body;
 
-  if (Object.keys(req.body).length <= 0) {
+  if (!developer_since || !preferred_os) {
     return resp.status(400).send({
-      error:
-        "Bad Request",
+      error: `Invalid data, missing values for developer_since, preferred_os`,
     });
   }
 
   try {
     const query = format(
       `
-      INSERT INTO "developer_infos" (developer_since, preferred_os) 
-      VALUES (%L) 
-      RETURNING *`,
+      INSERT INTO developer_infos (developer_since, preferred_os) 
+      VALUES (%L)
+      RETURNING *
+     `,
       [developer_since, preferred_os]
     );
-
-    const queryResult: QueryResult = await client.query(query);
+    const queryResult = await client.query(query);
     const developer = queryResult.rows[0];
 
     return resp.status(201).json(developer);
