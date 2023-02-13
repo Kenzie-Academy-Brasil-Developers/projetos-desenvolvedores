@@ -27,7 +27,7 @@ import {
   ensureIdDeveloperExist,
   validateTypesDeveloper,
 } from "./middlewares/developers.middlewares";
-import { ensureIdProjectExist } from "./middlewares/projects.middleware";
+import { ensureIdProjectExist, validateTypesProjects } from "./middlewares/projects.middleware";
 
 const app: Application = express();
 app.use(json());
@@ -51,11 +51,11 @@ app.patch(
   updateDeveloperInfos
 );
 
-app.post("/projects", createProjects);
+app.post("/projects", validateTypesProjects, createProjects);
 app.get("/projects", listProjectsAll);
 app.get("/projects/:id", ensureIdProjectExist, listProject);
 app.delete("/projects/:id", ensureIdProjectExist, deleteProjects);
-app.patch("/projects/:id", ensureIdProjectExist, updateProject);
+app.patch("/projects/:id", ensureIdProjectExist, validateTypesProjects, updateProject);
 
 const PORT: number = Number(process.env.PORT) || 3000;
 
