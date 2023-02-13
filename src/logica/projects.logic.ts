@@ -15,10 +15,17 @@ const createProjects = async (req: Request, resp: Response) => {
     developer_id,
   }: IProjects = req.body;
 
-  if (Object.keys(req.body).length <= 0) {
+  if (
+    !name ||
+    !description ||
+    !estimated_time ||
+    !repository ||
+    !start_date ||
+    !end_date ||
+    !developer_id
+  ) {
     return resp.status(400).send({
-      error:
-        "Bad Request",
+      error: `Invalid data, missing values for description, estimated_time, repository, start_date, end_date, developer_id,.`,
     });
   }
 
@@ -108,7 +115,6 @@ const updateProject = async (req: Request, resp: Response) => {
       developer_id?: number;
     } = req.body;
 
-   
     const updateSet = Object.entries(updateParams)
       .filter(([key, value]) => value !== undefined)
       .map(([key, value]) => format(`${key} = %L`, value))
