@@ -8,24 +8,24 @@ const createProjects = async (req: Request, resp: Response) => {
   const {
     name,
     description,
-    estimated_time,
+    estimatedTime,
     repository,
-    start_date,
-    end_date,
-    developer_id,
+    startDate,
+    endDate,
+    developerId,
   }: IProjects = req.body;
 
   if (
     !name ||
     !description ||
-    !estimated_time ||
+    !estimatedTime ||
     !repository ||
-    !start_date ||
-    !end_date ||
-    !developer_id
+    !startDate ||
+    !endDate ||
+    !developerId
   ) {
     return resp.status(400).send({
-      error: `Invalid data, missing values for description, estimated_time, repository, start_date, end_date, developer_id,.`,
+      error: `Invalid data, missing values for "description", "estimatedTime", "repository", "startDate", "endDate", "developerId".`,
     });
   }
 
@@ -33,23 +33,24 @@ const createProjects = async (req: Request, resp: Response) => {
     const query = format(
       `
       INSERT INTO projects (
-        name,
-        description,
-        estimated_time,
-        repository,
-        start_date,
-        end_date,
-        developer_id) 
+        "name",
+        "description",
+        "estimatedTime",
+        "repository",
+        "startDate",
+        "endDate",
+        "developerId"
+        ) 
       VALUES (%L) 
       RETURNING *`,
       [
         name,
         description,
-        estimated_time,
+        estimatedTime,
         repository,
-        start_date,
-        end_date,
-        developer_id,
+        startDate,
+        endDate,
+        developerId,
       ]
     );
 
@@ -108,11 +109,11 @@ const updateProject = async (req: Request, resp: Response) => {
     const updateParams: {
       name?: string;
       description?: string;
-      estimated_time?: string;
+      estimatedTime?: string;
       repository?: string;
-      start_date?: Date;
-      end_date?: Date;
-      developer_id?: number;
+      startDate?: Date;
+      endDate?: Date;
+      developerId?: number;
     } = req.body;
 
     const updateSet = Object.entries(updateParams)
@@ -126,7 +127,7 @@ const updateProject = async (req: Request, resp: Response) => {
 
     const query = format(
       `UPDATE projects 
-    SET ${updateSet} WHERE id = %L`,
+    SET "${updateSet}" WHERE id = %L`,
       [id]
     );
 

@@ -16,30 +16,30 @@ FOREIGN KEY ("developerInfoId") REFERENCES developer_infos ("id")
 );
 
 CREATE TABLE projects (
-id SERIAL PRIMARY KEY,
-name VARCHAR(50) NOT NULL,
-description TEXT NOT NULL,
-estimated_time VARCHAR(20) NOT NULL,
-repository VARCHAR(120) NOT NULL,
-start_date DATE NOT NULL,
-end_date DATE,
-developer_id INTEGER NOT NULL,
-FOREIGN KEY (developer_id) REFERENCES developers (id)
+"id" SERIAL PRIMARY KEY,
+"name" VARCHAR(50) NOT NULL,
+"description" TEXT NOT NULL,
+"estimatedTime" VARCHAR(20) NOT NULL,
+"repository" VARCHAR(120) NOT NULL,
+"startDate" DATE NOT NULL,
+"endDate" DATE,
+"developerId" INTEGER NOT NULL,
+FOREIGN KEY ("developerId") REFERENCES developers ("id")
 );
 
 CREATE TABLE technologies (
-id SERIAL PRIMARY KEY,
-name VARCHAR(30) NOT NULL
+"id" SERIAL PRIMARY KEY,
+"name" VARCHAR(30) NOT NULL
 );
 
-INSERT INTO technologies (name)
+INSERT INTO technologies ("name")
 VALUES ('JavaScript'), ('Python'), ('React'), ('Express.js'), ('HTML'), ('CSS'), ('Django'), ('PostgreSQL'), ('MongoDB');
 
 CREATE TABLE projectstechnologies (
-id SERIAL PRIMARY KEY,
-added_in DATE NOT NULL,
-project_id INTEGER NOT NULL,
-technology_id INTEGER NOT NULL,
-FOREIGN KEY (project_id) REFERENCES projects(id),
-FOREIGN KEY (technology_id) REFERENCES technologies(id)
+"id" SERIAL PRIMARY KEY,
+"addedIn" DATE NOT NULL,
+"projectId" INTEGER NOT NULL,
+"technologyId" INTEGER NOT NULL,
+FOREIGN KEY ("projectId") REFERENCES projects("id"),
+FOREIGN KEY ("technologyId") REFERENCES technologies("id")
 );
