@@ -1,4 +1,4 @@
-import "dotenv/config";
+require('dotenv').config();
 import express, { Application, json } from "express";
 import { databaseInit } from "./database/config";
 import {
