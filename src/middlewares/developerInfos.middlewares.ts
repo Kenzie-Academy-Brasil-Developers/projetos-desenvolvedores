@@ -8,8 +8,8 @@ const validateTypesInfos = (
 ) => {
   const keys = Object.keys(req.body);
   const requiredTypes: any = {
-    developer_since: "string",
-    preferred_os: "string",
+    developerSince: "string",
+    preferredOs: "string",
   };
 
   const invalidFields = keys.filter(
@@ -18,7 +18,7 @@ const validateTypesInfos = (
 
   if (invalidFields.length) {
     return resp.status(400).send({
-      error: "Invalid data, this object needs to look like this: developer_since: Date, preferred_os: string"
+      error: "Invalid data, this object needs to look like this: developerSince: Date, preferredOs: string"
     });
   }
   next();

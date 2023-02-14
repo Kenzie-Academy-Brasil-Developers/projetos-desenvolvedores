@@ -26,6 +26,7 @@ const ensureIdDeveloperExist = async (
   resp: Response,
   next: NextFunction
 ) => {
+
   try {
     const id: number = parseInt(req.params.id);
 

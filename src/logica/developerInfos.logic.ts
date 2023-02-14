@@ -5,43 +5,56 @@ import { client } from "../database";
 import { IDeveloperInfos } from "../interfaces/developers";
 
 const createDeveloperInfos = async (req: Request, resp: Response) => {
-  const { developer_since, preferred_os }: IDeveloperInfos = req.body;
+  const { developerSince, preferredOs }: IDeveloperInfos = req.body;
+  const developerId = Number(req.params.id);
 
-  if (!developer_since || !preferred_os) {
+  if (!developerSince || !preferredOs) {
     return resp.status(400).send({
-      error: `Invalid data, missing values for developer_since, preferred_os`,
+      error: `Invalid data, missing values for developerSince, preferredOs`,
     });
   }
 
   try {
-    const query = format(
-      `
-      INSERT INTO developer_infos (developer_since, preferred_os) 
-      VALUES (%L)
-      RETURNING *
-     `,
-      [developer_since, preferred_os]
-    );
-    const queryResult = await client.query(query);
-    const developer = queryResult.rows[0];
+    await client.query('BEGIN');
 
-    return resp.status(201).json(developer);
+    const insertResult = await client.query(
+      `
+      INSERT INTO developer_infos ("developerSince", "preferredOs") 
+      VALUES ($1, $2) 
+      RETURNING id
+      `,
+      [developerSince, preferredOs]
+    );
+    const developerInfoId = insertResult.rows[0].id;
+
+    const updateResult = await client.query(
+      `
+      UPDATE developers SET "developerInfoId" = $1 
+      WHERE id = $2 
+      RETURNING *
+      `,
+      [developerInfoId, developerId]
+    );
+
+    await client.query('COMMIT');
+
+    return resp.status(200).json(updateResult.rows[0]);
   } catch (error: any) {
+    await client.query('ROLLBACK');
     resp.status(400).send({ error: error.message });
   }
 };
-
 const updateDeveloperInfos = async (req: Request, resp: Response) => {
   try {
     const { id } = req.params;
     const updateParams: {
-      developer_since?: string;
-      preferred_os?: string;
+      developerSince?: string;
+      preferredOs?: string;
     } = req.body;
 
     const updateSet = Object.entries(updateParams)
       .filter(([key, value]) => value !== undefined)
-      .map(([key, value]) => format(`${key} = %L`, value))
+      .map(([key, value]) => format(`"${key}" = %L`, value))
       .join(", ");
 
     if (!updateSet) {
@@ -58,8 +71,12 @@ const updateDeveloperInfos = async (req: Request, resp: Response) => {
 
     const queryResult: QueryResult = await client.query(query);
 
-    const developer = await client.query(
-      format("SELECT * FROM developer_infos WHERE id = %L", [id])
+    const developer = await client.query(format(
+      `
+      SELECT * FROM developer_infos
+      WHERE id = %L
+      `,
+       [id])
     );
 
     return resp.send(developer.rows[0]);

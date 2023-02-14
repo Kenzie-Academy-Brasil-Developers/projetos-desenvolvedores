@@ -43,12 +43,8 @@ app.patch(
 );
 app.delete("/developers/:id", ensureIdDeveloperExist, deleteDeveloper);
 
-app.post("/developers/:id/infos", validateTypesInfos, createDeveloperInfos);
-app.patch(
-  "/developers/:id/infos",
-  ensureIdDeveloperInfosExist,
-  validateTypesInfos,
-  updateDeveloperInfos
+app.post("/developers/:id/infos", ensureIdDeveloperExist, validateTypesInfos, createDeveloperInfos);
+app.patch("/developers/:id/infos", ensureIdDeveloperInfosExist, validateTypesInfos, updateDeveloperInfos
 );
 
 app.post("/projects", validateTypesProjects, createProjects);

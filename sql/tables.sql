@@ -1,18 +1,18 @@
 CREATE TABLE developer_infos (
-id SERIAL PRIMARY KEY,
-developer_since DATE NOT NULL,
-preferred_os VARCHAR(10) NOT NULL,
-CHECK (preferred_os IN ('Windows', 'Linux', 'MacOS'))
+"id" SERIAL PRIMARY KEY,
+"developerSince" DATE NOT NULL,
+"preferredOs" VARCHAR(10) NOT NULL,
+CHECK ("preferredOs" IN ('Windows', 'Linux', 'MacOS'))
 );
 
 CREATE TYPE OS AS ENUM ('Windows', 'Linux', 'MacOS');
 
 CREATE TABLE developers (
-id SERIAL PRIMARY KEY,
-name VARCHAR(50) NOT NULL,
-email VARCHAR(50) NOT NULL UNIQUE,
-developer_info_id INTEGER NOT NULL UNIQUE,
-FOREIGN KEY (developer_info_id) REFERENCES developer_infos (id)
+"id" SERIAL PRIMARY KEY,
+"name" VARCHAR(50) NOT NULL,
+"email" VARCHAR(50) NOT NULL UNIQUE,
+"developerInfoId" INTEGER UNIQUE,
+FOREIGN KEY ("developerInfoId") REFERENCES developer_infos ("id")
 );
 
 CREATE TABLE projects (
