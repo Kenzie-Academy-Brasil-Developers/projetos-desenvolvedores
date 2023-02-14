@@ -1,7 +1,7 @@
 interface IDevelopers {
   name: string;
   email: string;
-  developerInfoId: any;
+  developerInfoId: number | null;
 }
 
 interface IDeveloperInfos {

@@ -5,7 +5,7 @@ interface IProjects {
   repository: string;
   start_date: Date;
   end_date: Date;
-  developer_id: number;
+  developer_id: number | null;
 }
 
 export { IProjects };
