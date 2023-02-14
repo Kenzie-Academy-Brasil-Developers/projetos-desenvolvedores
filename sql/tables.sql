@@ -35,7 +35,7 @@ CREATE TABLE technologies (
 INSERT INTO technologies ("name")
 VALUES ('JavaScript'), ('Python'), ('React'), ('Express.js'), ('HTML'), ('CSS'), ('Django'), ('PostgreSQL'), ('MongoDB');
 
-CREATE TABLE projectstechnologies (
+CREATE TABLE projects_technologies (
 "id" SERIAL PRIMARY KEY,
 "addedIn" DATE NOT NULL,
 "projectId" INTEGER NOT NULL,

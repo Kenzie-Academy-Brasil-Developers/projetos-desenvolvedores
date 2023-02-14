@@ -8,4 +8,9 @@ interface IProjects {
   developerId: number | null;
 }
 
-export { IProjects };
+interface IProjectTech {
+  addedIn: Date;
+  technologyId: number;
+}
+
+export { IProjects, IProjectTech };

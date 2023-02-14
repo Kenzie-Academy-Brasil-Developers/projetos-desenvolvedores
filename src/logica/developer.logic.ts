@@ -22,9 +22,11 @@ const createDeveloper = async (req: Request, resp: Response) => {
      `,
       [ name, email ]
     );
-    const developerQueryResult = await client.query(developerQuery);
+    const developerQueryResult: QueryResult = await client.query(developerQuery);
     const developer = developerQueryResult.rows[0];
+   
     return resp.status(201).json(developer);
+    
   } catch (error: any) {
     return resp.status(400).send({ error: error.message });
   }

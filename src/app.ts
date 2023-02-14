@@ -19,6 +19,7 @@ import {
   listProjectsAll,
   updateProject,
 } from "./logica/projects.logic";
+import { createProjectTech } from "./logica/tech.logic";
 import {
   ensureIdDeveloperInfosExist,
   validateTypesInfos,
@@ -52,6 +53,8 @@ app.get("/projects", listProjectsAll);
 app.get("/projects/:id", ensureIdProjectExist, listProject);
 app.delete("/projects/:id", ensureIdProjectExist, deleteProjects);
 app.patch("/projects/:id", ensureIdProjectExist, validateTypesProjects, updateProject);
+
+app.post("/projects/:id/technologies", ensureIdProjectExist, createProjectTech)
 
 const PORT: number = Number(process.env.PORT) || 3000;
 
